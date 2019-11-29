@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8">
+	<title>收入分析</title>
+	<!-- Bootstrap Styles-->
+	<link href="../css/bootstrap.min.css" rel="stylesheet" />
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!--bs multiselect  -->
+	<script src="../js/multiple/bootstrap-multiselect.js"></script>
+	<link rel="stylesheet" href="../js/multiple/bootstrap-multiselect.css" />
+	<link rel="stylesheet" type="text/css" href="../css/animate.min.css"/>
+	<!-- FontAwesome Styles-->
+	<link href="../css/font-awesome.css" rel="stylesheet" />
+	<!-- Morris Chart Styles-->
+	<link href="../js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+	<!-- Google Fonts-->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="../css/income.css" />
+	<link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css" />
+	<script src="../js/bootstrap-table/bootstrap-table.min.js"></script>
+	<link rel="stylesheet" href="../laydate-master/src/theme/default/laydate.css" />
+	<link rel="stylesheet" href="../js/loading/jquery.mloading.css" />
+	<script src="../js/loading/jquery.mloading.js"></script>
+</head>
+<body style="background-color: #1B1B1B;min-width:1280px;" >
+<div id="wrapper">
+	<!-- main结构-->
+	<div id="navigation"></div>
+	<div id="page-wrapper" style="overflow-x: hidden;">
+		<div id="page-inner" class="classpageinner" style="min-height: 1020px;color: white;">
+			<div class="form-group col-xs-12" style="float: left;margin-bottom: 20px;width:100%;margin-top:4.5%;background: #363636" id="dangerLine">
+				<div class="col-xs-3 col-sm-3 col-xs-3" style="margin-top: 1%;width:400px;" id="serverCos">
+					<div class="myown">
+						<label style="font-weight:400;font-size: 16px;float:left;margin-right:2%;margin-top:6px" class="lableServer" >区服</label>
+						<select name="district" multiple="multiple" size="5" id="district" style=" border-radius: 0; width: 251px;height: 30px;" class="form-control">
+						</select>
+					</div>
+				</div>
+				<div class="form-group col-xs-3 col-xs-pull-0" id="data_5"style="margin-top:1.1%;width: 35% !important">
+					<div style="font-size:16px" class="timeTime">
+						日期&nbsp; <el-date-picker
+							class="timePick"
+							value-format="yyyy-MM-dd"
+							v-model="ruleForm.dateValue"
+							type="daterange"
+							align="bottom"
+							unlink-panels
+							range-separator="~"
+							start-placeholder="开始日期"
+							end-placeholder="结束日期"
+							:picker-options="pickerOptions">
+					</el-date-picker>
+					</div>
+
+				</div>
+				<button type="button" id="cha" class="btn" style="float: right;background-color: #1E9FFF;color: #fff;border: none;margin-top: 1%;margin-right: 2.5%" onclick="onblu()">查询</button>
+			</div>
+			<div class="real-top" style="cursor: pointer">
+				<p id="inamount" class="p-float">
+					<span class="textN">收入金额</span>
+					<br />
+					<span id='numberin' class="number">0.00</span>
+				</p>
+				<p id="paynumber" class="p-float">
+					<span class="textN">支付人数</span>
+					<br />
+					<span id='numberpeo' class="number">0</span>
+				</p>
+				<p id="firstpay" class="p-float">
+					<span class="textN">首付</span>
+					<br />
+					<span id='numberfirst' class="number">0.00</span>
+				</p>
+				<p id="firstpeo" class="p-float">
+					<span class="textN">首付人数</span>
+					<br />
+					<span id='numberfirpeo' class="number">0</span>
+				</p>
+				<p id="paytimes" class="p-float" style="border-right:none">
+					<span class="textN">充值次数</span>
+					<br />
+					<span id='numbertimes' class="number">0</span>
+				</p>
+			</div>
+			<div id="real-inner" style="float: left;width: 100%;margin-top: 1%;background: #363636;padding-top: 1%">
+				<div class="real-btnAll">
+					<button style="border: none;color:#fff;background-color:#1E9FFF "><span>导出</span></button>
+				</div>
+				<div id="div-one" style="width: 100%"></div>
+			</div>
+			<div id="real-innernex" style="float: left;width: 100%;margin-top: 1%;background: #363636;padding-top: 1%">
+				<div class="real-btnAll">
+					<button style="border: none;color:#fff;background-color:#1E9FFF "><span>导出</span></button>
+				</div>
+				<div id="div-two" style="width: 100%"></div>
+			</div>
+			<div style="float: left;width: 100%;margin-top: 1%;">
+				<div style="font-size: 17px;display: flex;cursor: pointer">
+					<div class="changebtn" id="btnone">ARPU</div>
+					<div class="changebtn" id="btntwo" style="margin-left: 2px">ARPPU</div>
+				</div>
+				<div id="real-innerlast" style="background: #363636;padding-top: 1%">
+					<div class="real-btnAll">
+						<button style="border: none;color:#fff;background-color:#1E9FFF "><span>导出</span></button>
+					</div>
+					<div id="div-three" style="width: 100%"></div>
+				</div>
+			</div>
+			<div id="real-innerano" style="float: left;width: 100%;margin-top: 1%;background: #363636;">
+				<div id="div-four" style="width: 100%;height: 400px"></div>
+			</div>
+			<!--<div style="float: left;margin-top: 1%;text-align:center;width: 100%;background: #363636;margin-bottom: 2%;padding: 1%">-->
+				<!--&lt;!&ndash;<span style="font-size: 15px">表格数据排期完成中。</span>&ndash;&gt;-->
+				<!--<div class="real-table-All">-->
+					<!--<div class="real-btnAll">-->
+						<!--<button class="btn glyphicon glyphicon-save" style="margin-top:1%;color:#4a2aff;"><span style="margin-left: 10px">导出</span></button>-->
+					<!--</div>-->
+					<!--<table id="real-datatableAll" style="text-align: center;table-layout: fixed;">-->
+					<!--</table>-->
+				<!--</div>-->
+			<!--</div>-->
+		</div>
+	</div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../js/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/6.1.1/highcharts.js"></script>
+<script src="../js/highcharts/exporting.js"></script>
+<script src="http://cdn.hcharts.cn/highcharts/6.1.1/modules/data.js"></script>
+<script src="../js/jquery.table2excel.js"></script>
+<script src="../laydate-master/src/laydate.js"></script>
+<script src="https://cdn.bootcss.com/echarts/4.3.0-rc.2/echarts.min.js"></script>
+<script src="../js/income.js"></script>
+<script type="text/javascript">
+    $('#navigation').load('tagtag.html')
+    var vm=new Vue({
+        el:'#data_5',
+        data:{
+            msg:'hello',
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() > (Date.now()-8.64e7);
+                },
+                shortcuts: [{
+                    text: '今日',
+                    onClick(picker) {
+                        var end = new Date();
+                        var start = new Date();
+                        start.setTime(start.getTime());
+                        picker.$emit('pick', [start, end]);
+                    }
+                },{
+                    text: '昨日',
+                    onClick(picker) {
+                        var end = new Date();
+                        var start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 );
+                        end.setTime(end.getTime() - 3600 * 1000 * 24 );
+                        picker.$emit('pick', [start, end]);
+                    }
+                },{
+                    text: '近7日',
+                    onClick(picker) {
+                        var end = new Date();
+                        var start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '近30日',
+                    onClick(picker) {
+                        var end = new Date();
+                        var start = new Date();
+                        start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                        picker.$emit('pick', [start, end]);
+                    }
+                }, {
+                    text: '全部',
+                    onClick(picker) {
+                        var end = new Date();
+                        var start = new Date('2019-10-8 00:00:00');
+                        picker.$emit('pick', [start, end]);
+                    }
+                }]
+            },
+            ruleForm: { dateValue: "" },
+        },
+        computed: {
+            timeDefault() {
+                var date = new Date();
+                var s1 = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate());
+                return s1;
+            },
+            timeDefaultLast() {
+                var date = new Date();
+                var oneweekdate = new Date(date-7*24*3600*1000);
+                var y = oneweekdate.getFullYear();
+                var m = oneweekdate.getMonth()+1;
+                var d = oneweekdate.getDate();
+                var formatwdate = y+'-'+m+'-'+d;
+                return formatwdate;
+            }
+        },
+        mounted() {
+            // 初始化查询，默认为前一周
+            this.ruleForm.dateValue = [this.timeDefaultLast,this.timeDefault];
+        },
+        methods: {
+        }
+    })
+
+    //付费金额
+    $(".real-btnAll").click(function(){
+        $("#real-datatableAll").table2excel({
+            exclude: ".noExl",
+            name: "Excel Document Name",
+            filename: "myFileName",
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true,
+        });
+    });
+    $('.p-float').click(function(obj){
+        $('.p-float').css("border-bottom","none")
+        $('.p-float').css("background","#272727")
+        var idcurrent=obj.currentTarget.id
+        $('#'+idcurrent).css("border-bottom","2px solid #1E9FFF")
+        $('#'+idcurrent).css("background","#363636")
+    })
+    $('.changebtn').click(function(obj){
+        $('.changebtn').css("background","#121212")
+        var idcurrent=obj.currentTarget.id
+        $('#'+idcurrent).css("background","#363636")
+    })
+    var winWidth = 0,winHeight = 0;
+    function changebleWidthHeight() {
+        if (window.innerWidth)
+            winWidth = window.innerWidth;
+        else if ((document.body) && (document.body.clientWidth))
+            winWidth = document.body.clientWidth;
+        //获取窗口高度
+        if (window.innerHeight)
+            winHeight = window.innerHeight;
+        else if ((document.body) && (document.body.clientHeight))
+            winHeight = document.body.clientHeight;
+		//通过深入Document内部对body进行检测，获取窗口大小
+        if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+        {
+            winHeight = document.documentElement.clientHeight;
+            winWidth = document.documentElement.clientWidth;
+        }
+        document.getElementById("serverCos").style.width = winWidth - 50
+        document.getElementById("data_5").style.width = winWidth - 40
+
+    }
+    window.onresize = changebleWidthHeight();
+
+
+</script>
+</body>
+
+</html>

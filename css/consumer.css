@@ -1,0 +1,32 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.consumer-p{
+	width: 8%;
+	float: left;
+	cursor: pointer;	
+}
+#consumer-p1{
+	width: 8%;
+	float: left;
+	cursor: pointer;
+	color: #1AB394;
+}
+#consumer-table{
+	width: 100%;
+	margin-top: 60px;
+}
+.modal-p{
+	padding-top: 0;
+	text-align:center;
+}
+#consumer-table>tbody>tr{
+	height: 30px;
+}
+#consumer-table thead tr th{
+	background: #202020;
+}
+.amend,.authority,.reset,.del{
+	cursor: pointer;
+}

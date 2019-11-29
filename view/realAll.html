@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8">
+    <title>总览</title>
+    <!-- Bootstrap Styles-->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+      <!--bs multiselect  -->
+	<script src="../js/multiple/bootstrap-multiselect.js"></script>
+	<link rel="stylesheet" href="../js/multiple/bootstrap-multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="../css/animate.min.css"/>
+    <!-- FontAwesome Styles-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="../css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Morris Chart Styles-->
+    <link href="../js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+  	<link rel="stylesheet" href="../css/realAll.css" />
+    <link rel="stylesheet" type="text/css" href="../css/calendar.css"/>
+    <link rel="stylesheet" href="../js/bootstrap-table/bootstrap-table.css" />
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="../js/bootstrap-table/bootstrap-table.min.js"></script>
+    <link rel="stylesheet" href="../js/loading/jquery.mloading.css" />
+    <script src="../js/loading/jquery.mloading.js"></script>
+</head>
+<body style="background-color: #202020;min-width:1280px;" id="bodywidth">
+	<div id="wrapper" style="padding-top: 41px;">
+       <!-- main结构-->
+        <div id="page-wrapper" style="overflow-x: hidden;background: #1B1B1B">
+			<div id="page-inner" class="classpageinner" style="background-color: #202020;min-height: 896px;color: white;">
+	        	<div class="form-group col-xs-12" style="float: left;background: #363636;margin-bottom: 20px;width:100%;margin-top:2%" id="dangerLine">
+
+	        			<div class="col-xs-3 col-sm-3 col-xs-3" style="margin-top: 1%;" id="serverCos" style="width:400px">
+							<div class="myown">
+								<label style="font-weight:400;font-size: 16px;float:left;margin-right:2%;margin-top:6px" class="lableServer" >区服</label>
+								<select name="district" multiple="multiple" size="5" id="district" style=" border-radius: 0; width: 251px;height: 30px;" class="form-control">
+						    	</select>
+							</div>
+						</div>
+	        			<div class="form-group col-xs-3 col-xs-pull-0" id="data_5" style="margin-top:1.1%;width: 35%">
+					        <div style="font-size:16px" class="timeTime">
+					        	日期选择&nbsp; <el-date-picker
+                                    class="timePick"
+                                    value-format="yyyy-MM-dd"
+                                    v-model="ruleForm.dateValue"
+                                    type="daterange"
+                                    align="bottom"
+                                    unlink-panels
+                                    range-separator="~"
+                                    start-placeholder="开始日期"
+                                    end-placeholder="结束日期"
+                                    :picker-options="pickerOptions">
+                            </el-date-picker>
+					        </div>
+							 <!-- 对局分析按钮 -->
+							 <!--<button data-method="offset" onclick="shuju()" data-type="auto" class="layui-btn layui-btn-normal" type="button" id="teambtn"style="float: left;background-color: #1E9FFF;color: white;">实时分析</button>-->
+							 <!--<button data-method="offset" onclick="shuju()" data-type="auto" class="layui-btn layui-btn-normal" type="button" id="teambtn2"style="float: left;background-color: #1E9FFF;color: white;">三日分析</button>-->
+				        </div>
+				        <button type="button" id="cha" class="btn" style="float: right;background-color:#1E9FFF;color: white;width:60px;margin-top:1%;margin-right: 2.5%" onclick="onblu()">查询</button>
+				</div>
+				<!-- 对局分析表 -->
+				<!--<div class="fenxi fenxi1">-->
+					<!--<span class="fenxipass">X</span>-->
+					<!--<table id="exampleop" border-bottom="1px" class="table text-nowrap" style="min-width: 100%;"></table>-->
+				<!--</div>-->
+				<!--<div class="fenxi fenxi2">-->
+					<!--<span class="fenxipass">X</span>-->
+					<!--<table id="exampleop2" border-bottom="1px" class="table text-nowrap" style="min-width: 100%;"></table>-->
+				<!--</div>-->
+	        	<div class="real-top">
+	        		<p id="real-p1" class="p-float" style="padding-top:1%">
+	        			<span class="textN">注册玩家</span>
+	        			<br />
+	        			<span id='leiji' class="number"></span>
+					</p>
+					<p id="real-pJ" class="p-float" style="padding-top:1%">
+						<span class="textN">首次激活</span>
+						<br />
+						<span id='activation' class="number"></span>
+					</p>
+					<p id="real-p6" class="p-float" style="padding-top:1%">
+	        			<span class="textN">活跃玩家</span>
+	        			<br />
+	        			<span id='averageNum' class="number"></span>
+	        		</p>
+	        		<p id="real-p2" class="p-float lll" style="padding-top:1%">
+	        			<span class="textN">付费玩家</span>
+	        			<br />
+	        			<span id='huo' class="number">0</span>
+	        		</p>
+					<p id="real-p4" class="p-float lll" style="padding-top:1%">
+						<span class="textN">付费金额</span>
+						<br />
+						<span id='money' class="number">0.00</span>
+					</p>
+				</div>
+
+	        	<div id="real-inner">
+	        		<div class="main conceal reveal" style="height: 100%;width: 100%">
+		        		<button id="real-btn" style="margin-top:.8%;color:#fff;"><span style="font-size: 14px">导出</span></button>
+						<div class="father">
+							<div class="helpDescription">
+								<table style="border-radius: 4px;">
+									<tr style="height: 30px;line-height: 30px">
+										<td colspan="8" style="background: #121212;padding-left: 3px">总览趋势说明</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">注册玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家注册玩家</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">首次登录</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家首次激活</td>
+									</tr>
+
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">活跃玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家活跃人数及趋势图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费人数</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日付费玩家人数</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费金额</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家的付费金</td>
+									</tr>
+								</table>
+							</div>
+							<i style="background: url('../image/help.png')" class="help"></i>
+						</div>
+						<div id="div-one"></div>
+						<div class="real-btnAll">
+							<button style="color:#fff;border: none"><span style="font-size: 14px">导出</span></button>
+						</div>
+			        	<div class="real-table" style="display: none">
+			        		<table id="real-datatable">
+			        			<thead>
+			        				<tr>
+				        				<th>日期</th>
+				        				<th>注册玩家</th>
+				        			</tr>
+			        			</thead>
+			        			<tbody id="real-tbody"></tbody>
+			        		</table>
+			        	</div>
+					</div>
+					<div class="mainA conceal reveal" style="height: 100%;width: 100%">
+
+		        		<button id="real-btnA" style="margin-top:.8%;color:#fff;"><span style="font-size: 14px">导出</span></button>
+						<div class="father">
+							<div class="helpDescription">
+								<table style="border-radius: 4px;">
+									<tr style="height: 30px;line-height: 30px">
+										<td colspan="8" style="background: #121212;padding-left: 3px">总览趋势说明</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">注册玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家注册玩家</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">首次登录</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家首次激活</td>
+									</tr>
+
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">活跃玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家活跃人数及趋势图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费人数</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日付费玩家人数</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费金额</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家的付费金</td>
+									</tr>
+								</table>
+							</div>
+							<i style="background: url('../image/help.png')" class="help"></i>
+						</div>
+						<div id="div-A"></div>
+						<div class="real-btnAll">
+							<button style="color:#fff;border: none"><span style="font-size: 14px">导出</span></button>
+						</div>
+			        	<div class="real-table-A" style="display: none">
+			        		<table id="real-datatableA">
+			        			<thead>
+			        				<tr>
+				        				<th>日期</th>
+				        				<th>活跃玩家</th>
+				        			</tr>
+			        			</thead>
+			        			<tbody id="real-tbodyA"></tbody>
+			        		</table>
+			        	</div>
+					</div>
+					<div class="mainJ conceal reveal" style="height: 100%;width: 100%">
+						<button id="real-btnJ" style="margin-top:.8%;color:#fff;"><span style="font-size: 14px">导出</span></button>
+						<div class="father">
+							<div class="helpDescription">
+								<table style="border-radius: 4px;">
+									<tr style="height: 30px;line-height: 30px">
+										<td colspan="8" style="background: #121212;padding-left: 3px">总览趋势说明</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">注册玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家注册玩家</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">首次登录</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家首次激活</td>
+									</tr>
+
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">活跃玩家</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家活跃人数及趋势图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费人数</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日付费玩家人数</td>
+									</tr>
+									<tr style="height: 30px;line-height: 30px;background: #1B1B1B">
+										<td colspan="1" style="padding-left: 3px">付费金额</td>
+										<td colspan="7" style="padding-left: 15px;color: #A4A3AE;">默认为近七日玩家的付费金</td>
+									</tr>
+								</table>
+							</div>
+							<i style="background: url('../image/help.png')" class="help"></i>
+						</div>
+						<div id="div-J"></div>
+						<div class="real-btnAll">
+							<button style="color:#fff;border: none"><span style="font-size: 14px">导出</span></button>
+						</div>
+						<div class="real-table-J" style="display: none">
+							<table id="real-datatableJ">
+								<thead>
+								<tr>
+									<th>时间</th>
+									<th>首次激活玩家</th>
+								</tr>
+								</thead>
+								<tbody id="real-tbodyJ"></tbody>
+							</table>
+						</div>
+					</div>
+	        	</div>
+				<div>
+					<div class="real-table-All">
+						<table id="real-datatableAll" style="text-align: center">
+						</table>
+					</div>
+				</div>
+	        </div>
+        </div>
+	</div>
+	</body>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<script src="../js/bootstrap-table/bootstrap-table.min.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/6.1.1/highcharts.js"></script>
+	<script src="../js/highcharts/exporting.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/6.1.1/modules/data.js"></script>
+	<script src="../js/rili/bootstrap-datepicker.js"></script>
+	<script src="../js/rili/cropper.min.js"></script>
+	<script src="../js/rili/form-advanced-demo.min.js"></script>
+	<script src="../js/jquery.table2excel.js"></script>
+	<script src="../js/jquery.metisMenu.js"></script>
+    <script src="../js/realAll.js"></script>
+	<script type="text/javascript">
+        var vm=new Vue({
+            el:'#data_5',
+            data:{
+                msg:'hello',
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '今日',
+                        onClick(picker) {
+                            var end = new Date();
+                            var start = new Date();
+                            start.setTime(start.getTime());
+                            picker.$emit('pick', [start, end]);
+                        }
+                    },{
+                            text: '昨日',
+                            onClick(picker) {
+                                var end = new Date();
+                                var start = new Date();
+                                start.setTime(start.getTime() - 3600 * 1000 * 24 );
+                                end.setTime(end.getTime() - 3600 * 1000 * 24 );
+                                picker.$emit('pick', [start, end]);
+                            }
+                        },{
+                        text: '近7日',
+                        onClick(picker) {
+                            var end = new Date();
+                            var start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '近30日',
+                        onClick(picker) {
+                            var end = new Date();
+                            var start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '全部',
+                        onClick(picker) {
+                            var end = new Date();
+                            var start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+                ruleForm: { dateValue: "" },
+            },
+            computed: {
+                timeDefault() {
+                    var date = new Date();
+                    var s1 = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate());
+                    return s1;
+                },
+                timeDefaultLast() {
+                    var date = new Date();
+                    var oneweekdate = new Date(date-7*24*3600*1000);
+                    var y = oneweekdate.getFullYear();
+                    var m = oneweekdate.getMonth()+1;
+                    var d = oneweekdate.getDate();
+                    var formatwdate = y+'-'+m+'-'+d;
+                    return formatwdate;
+                }
+            },
+            mounted() {
+                // 初始化查询，默认为前一周
+                this.ruleForm.dateValue = [this.timeDefaultLast,this.timeDefault];
+            },
+            methods: {
+                handleOpen(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+                handleClose(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+            }
+        })
+
+		$("#datepicker").datepicker({
+			autoclose: true,
+		}).on('hide',function(){
+			$("#real-datatable").bootstrapTable('destroy');
+			$("#real-datatableA").bootstrapTable('destroy');
+			$("#real-datatable2").bootstrapTable('destroy');
+			$("#real-datatable3").bootstrapTable('destroy');
+			$("#real-datatable4").bootstrapTable('destroy')
+			$("#real-tbody").empty();
+			$("#real-tbodyA").empty();
+			$("#real-tbody2").empty();
+			$("#real-tbody3").empty();
+			$("#real-tbody4").empty();
+			$("#leiji").empty();
+			$("#guanwang").empty();
+			$("#averageNum").empty();
+			// $("#huo").empty();
+			$("#ren").empty();
+			$("#jin").empty();
+			homedata();
+		})
+		//新增
+	    $("#real-btn").click(function(){
+		    $("#real-datatable").table2excel({
+		        exclude: ".noExl",
+		        name: "Excel Document Name",
+		        filename: "注册数量",
+		        exclude_img: true,
+		        exclude_links: true,
+		        exclude_inputs: true,
+	       	});
+		});
+        //激活
+        $("#real-btnJ").click(function(){
+            $("#real-datatableJ").table2excel({
+                exclude: ".noExl",
+                name: "Excel Document Name",
+                filename: "激活数量",
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true,
+            });
+        });
+		//官网累计
+	    $("#real-btnA").click(function(){
+		    $("#real-datatableA").table2excel({
+		        exclude: ".noExl",
+		        name: "Excel Document Name",
+		        filename: "活跃数量",
+		        exclude_img: true,
+		        exclude_links: true,
+		        exclude_inputs: true,
+	       	});
+	    });
+
+	    //付费金额
+	    $(".real-btnAll").click(function(){
+		    $("#real-datatableAll").table2excel({
+		        exclude: ".noExl",
+		        name: "Excel Document Name",
+		        filename: "myFileName",
+		        exclude_img: true,
+		        exclude_links: true,
+		        exclude_inputs: true,
+	       	});
+	    });
+	   	$('.p-float').click(function(obj){
+	   		$('.p-float').css("border-bottom","none")
+	   		$('.p-float').css("background","#272727")
+	   		var idcurrent=obj.currentTarget.id
+	   		$('#'+idcurrent).css("border-bottom","2px solid #1E9FFF")
+	   		$('#'+idcurrent).css("background","#363636")
+	   	})
+
+	   	firstLload()
+	   	function firstLload(){
+	   		$("#real-p1").click()
+	   	}
+	var winWidth = 0,winHeight = 0;
+    function changebleWidthHeight() {
+    if (window.innerWidth)
+        winWidth = window.innerWidth;
+    else if ((document.body) && (document.body.clientWidth))
+        winWidth = document.body.clientWidth;
+//获取窗口高度
+    if (window.innerHeight)
+        winHeight = window.innerHeight;
+    else if ((document.body) && (document.body.clientHeight))
+        winHeight = document.body.clientHeight;
+//通过深入Document内部对body进行检测，获取窗口大小
+    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+    {
+        winHeight = document.documentElement.clientHeight;
+        winWidth = document.documentElement.clientWidth;
+    }
+
+    document.getElementById("serverCos").style.width = winWidth - 50
+    document.getElementById("data_5").style.width = winWidth - 40
+
+}
+   window.onresize = changebleWidthHeight();
+	</script>
+</body>
+
+</html>

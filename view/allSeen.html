@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+
+        <link href="../css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../css/realMobile.css" />
+	    <script src="../js/jquery.min.js"></script>
+	    <!--<script src="../js/bootstrap.min.js"></script>-->
+	    <!-- <link rel="stylesheet" href="../js/dataTables/dataTables.bootstrap.css" />-->
+
+	    <!-- FontAwesome Styles-->
+	        <link rel="stylesheet" href="../laydate-master/src/theme/default/laydate.css" />
+	    <!-- Morris Chart Styles-->
+
+
+	    <script src="../js/bootstrap-table/bootstrap-table.min.js"></script>
+	    <link rel="stylesheet" href="../js/loading/jquery.mloading.css" />
+	    <script src="../js/loading/jquery.mloading.js"></script>
+        <link rel="stylesheet" href="../js/layui/css/layui.css">
+        <script src="../js/layui/layui.js"></script>
+        <style type="text/css">
+          body{
+            margin: 0 auto;
+            background-color:#f3f3f4;
+          }
+          .left{
+            min-width: 170px ;
+            width: 13%;
+            height: 100%;
+            background:#121212 ;
+            position: fixed;
+            margin-top: 59px;
+          }
+          .nav{
+            width: 100.5%;
+          }
+          .right{
+            width: 87%;
+            float:right;
+            background: #363636;
+          }
+          .el-submenu .el-menu-item{
+            min-width: auto !important;
+          }
+          .el-menu-item.is-active{
+            background-color: #4d5055 !important;
+          }
+          .el-menu-item:hover{
+            background-color:  #4d5055 !important;
+          }
+          .el-submenu__title:hover{
+            background-color:  #4d5055 !important;
+          }
+          .el-submenu.is-active.is-opened{
+            background-color: #0d0d0d !important;
+          }
+          .el-menu.el-menu--inline{
+            background-color: #0d0d0d !important;
+          }
+          a{
+            text-decoration:none !important;
+            color:white !important;
+          }
+          a:hover{
+              text-decoration:none !important;
+          }
+          .el-menu-item-group__title{
+            display: none;
+          }
+          .topTag{
+            color: #fff;
+            height: 61px;
+            line-height: 61px;
+            font-size: 20px;
+            font-weight: 300;
+            background:#121212 ;
+              padding-left: 2%;
+          }
+          .cancelbtn{
+			line-height: 32px;
+		    font-size: 14px;
+
+		    height: 32px;
+		    border-radius: 22px;
+		    text-align: center;
+		    width: 150px;
+		    float:right;
+			}
+			.el-menu{
+				border:none !important;
+			}
+			.laydate-btns-clear,.laydate-btns-confirm{
+				color:white;
+			}
+			.layui-laydate-content td.laydate-selected{
+				background:#4a2cf8 !important;
+			}
+			/*.layui-laydate-main {*/
+			    /*width: 240px !important;*/
+			/*}*/
+			/*.layui-laydate-range {*/
+			    /*width: 485px !important;*/
+			/*}*/
+			.highcharts-root{
+				padding-left:20px !important;
+				padding-right:40px !important;
+			}
+          .layui-nav{
+              background-color: #121212 !important;
+          }
+          .layui-nav .layui-nav-more {
+              top:65% !important;
+          }
+          .layui-nav-bar{
+              background-color: #121212 !important;
+          }
+          .layui-nav-child{
+              left: 35% !important;
+              min-width: 80% !important;
+              border-radius: 4px !important;
+          }
+          .triangle-up {
+              position: absolute;
+              left: 10%;
+              top: -36%;
+              width: 0;
+              height: 0;
+              border-left: 4px solid transparent;
+              border-right: 7px solid transparent;
+              border-bottom: 10px solid white;
+          }
+          .exitIn:hover .kkk{
+              color:#2953FF !important;
+          }
+          /*.cancelbtn:hover #nameShow{*/
+              /*color:#2953FF !important;*/
+          /*}*/
+
+          /*@media screen and (max-width: 375px) and (-webkit-device-pixel-ratio: 2){*/
+              /*.right{*/
+                  /*width: 65% !important;*/
+                  /*float:left !important;*/
+                  /*background: #363636 !important;*/
+                  /*margin-left: 13% !important;*/
+              /*}*/
+          /*}*/
+        </style>
+    </head>
+    <body style="background: #202020">
+        <div class="content">
+          <div style="width: 100%;position: fixed; height: 60px;line-height: 60px;z-index:10000;max-height:60px;background: #121212;">
+              <div class="topTag" style="width: 26%;float:left;min-width:170px;">
+                 <img src="../image/nav-logo.png" onclick="backtoIndex()" style="cursor: pointer">
+              </div>
+
+                <div style="float: right;margin-right: 2%;" id="changett">
+
+                    <ul class="layui-nav" lay-filter="">
+                        <li class="layui-nav-item">
+                            <a href="javascript:void(0);" class="cancelbtn" style="margin-top: 12px;margin-right: -10%;text-decoration:none;" id="quit" >
+                                <img src="../image/联系人.png" style="margin-bottom: 8px;width: 16px">
+                                <span id="nameShow" style="font-size: 13px;color: white;margin-left: 10px;">admin</span>
+                            </a>
+                            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                                <div class="triangle-up"></div>
+                                <dd>
+                                    <a href="javascript:void(0)" class="exitIn" onclick="playout()" style="text-decoration:none;" onmouseover="document.images['arrow'].src='../image/userH.png'"
+                                       onmouseout="document.images['arrow'].src='../image/user.png'">
+                                    <img alt="arrow" id="arrow" src="../image/user.png" style="vertical-align: bottom" />
+                                    <span style="margin-left: 5px;font-size: 15px;color:black;opacity: .8;" class="kkk">退出登录</span>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+              <div style="color: #287CA1;;cursor: pointer;float: right" onclick="jumpto()">旧版入口</div>
+          </div>
+          <div class="left" style="z-index:10000">
+            <el-row class="tac" >
+                    <el-col class="nav">
+                        <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" background-color="#121212" text-color="#fff" active-text-color="#ffd04b">
+                            <el-submenu index="12">
+                                <template slot="title">
+                                    <i class="el-icon-s-marketing" style="color:white;"></i>
+                                    <span>前端分析</span>
+                                </template>
+                                <el-menu-item-group>
+                                    <el-menu-item index="5"><a onclick="scapClientData()"  target="_blank">前端实时</a></el-menu-item>
+                                    <el-menu-item index="6"><a onclick="scapClientConfig()"  target="_blank">前端配置</a></el-menu-item>
+                                    <el-menu-item index="7"><a onclick="scapClientCollapse()"  target="_blank">前端崩溃</a></el-menu-item>
+                                </el-menu-item-group>
+                            </el-submenu>
+                            <el-submenu index="11">
+                              <template slot="title">
+                                <i class="el-icon-pie-chart" style="color:white;"></i>
+                                <span>后端分析</span>
+                              </template>
+                              <el-menu-item-group>
+                                <el-menu-item index="1"><a onclick="scap()" target="_blank">总览</a></el-menu-item>
+                                <el-menu-item index="2"><a onclick="scapTwo()"  target="_blank">实时分析</a></el-menu-item>
+                                <el-menu-item index="3"><a onclick="scapDaily()"  target="_blank">日报分析</a></el-menu-item>
+                                <el-menu-item index="4"><a onclick="scapRetention()" target="_blank"> 留存分析</a></el-menu-item>
+                                <el-menu-item index="8"><a onclick="scapLTV()" target="_blank">LTV分析</a></el-menu-item>
+                                <el-menu-item index="9"><a onclick="scapincome()" target="_blank">收入分析</a></el-menu-item>
+                                  <!--<el-menu-item index="4"><a onclick="scapRetention()" target="_blank"> 留存分析</a></el-menu-item>-->
+                                <!--<el-menu-item index="1-4">收入分析</el-menu-item>-->
+                                <!--<el-menu-item index="1-5">数据分析</el-menu-item>-->
+                              </el-menu-item-group>
+                            </el-submenu>
+                            <!--<el-menu-item index="2">-->
+                              <!--<i class="el-icon-s-marketing" style="color:white;"></i>-->
+                              <!--<span slot="title">游戏数据</span>-->
+                            <!--</el-menu-item>-->
+                            <!--<el-menu-item index="3">-->
+                              <!--<i class="el-icon-setting" style="color:white;"></i>-->
+                              <!--<span slot="title">系统管理</span>-->
+                            <!--</el-menu-item>-->
+                        </el-menu>
+                    </el-col>
+            </el-row>
+          </div>
+          <div class="right">
+
+          </div>
+        </div>
+
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/jquery.min.js"></script>
+	<script src="../js/rili/form-advanced-demo.min.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/6.1.1/highcharts.js"></script>
+	<script src="../js/highcharts/exporting.js"></script>
+	<script src="http://cdn.hcharts.cn/highcharts/6.1.1/modules/data.js"></script>
+	<script src="../laydate-master/src/laydate.js"></script>
+    <script src="../js/cookie.js"></script>
+    <script>
+        var vm=new Vue({
+            el:'.content',
+            data:{
+                msg:'hello'
+            },
+            methods: {
+                handleOpen(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+                handleClose(key, keyPath) {
+                    console.log(key, keyPath);
+                },
+            }
+        })
+        $('.right').load('realAll.html')
+        function backtoIndex(){
+            window.location.href = "http://center.umi-game.cn/view/index.html";
+        }
+		islog()
+        function scap() {
+            localStorage.setItem('navigation','1')
+                window.location.href = "../view/allSeen.html";
+        }
+        function scapTwo() {
+            localStorage.setItem('navigation','2')
+            if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+                window.location.href = "../mobile/realTimeMobile.html";
+            } else {
+                window.location.href = "../view/realTime.html";
+            }
+        }
+         function scapDaily(){
+             localStorage.setItem('navigation','3')
+             window.location.href = "../view/dailynew.html";
+         }
+         function scapClientData() {
+             localStorage.setItem('navigation','5')
+             window.location.href = "../view/clientData.html";
+         }
+        function scapRetention() {
+            localStorage.setItem('navigation','4')
+            window.location.href = "../view/retention.html";
+        }
+        function scapClientConfig() {
+            localStorage.setItem('navigation','6')
+            window.location.href = "../view/clientConfig.html";
+        }
+        function scapClientCollapse(){
+            localStorage.setItem('navigation','7')
+            window.location.href = "../view/clientCollapse.html";
+        }
+        function scapLTV(){
+            localStorage.setItem('navigation','8')
+            window.location.href = "../view/LTV.html";
+        }
+        function scapincome() {
+            localStorage.setItem('navigation','9')
+            window.location.href = "../view/income.html";
+        }
+		function islog() {
+			$.ajax({
+				type: "get",
+				url: "../isLogin.action",
+				async: true,
+				success: function(e) {
+					// if(e.state == false) {
+					// 	// alert(e.message)
+					// 	// window.location.href = "login.html"
+					// }
+				}
+			});
+		}
+        window.onload=function(){
+            var thisC=document.getElementsByClassName('el-menu-item')[0]
+            $(thisC).click()
+        }
+        //执行一个时间实例
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+		function playout() {
+			$.ajax({
+				type: "get",
+				url: "../PlayOut.action",
+				async: true,
+				success: function(e) {
+					alert(e.message)
+					window.location.href = "login.html"
+                    window.close()
+				}
+			});
+		}
+        function jumpto() {
+            window.location.href = "http://center.umi-game.cn:9400/view/pandect.html";
+        }
+		var userName=document.getElementById('nameShow').innerText
+		addCookie("userName", json, 8, "/")
+
+    </script>
+</html>
